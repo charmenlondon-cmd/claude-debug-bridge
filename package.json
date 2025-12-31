@@ -1,0 +1,14 @@
+{
+  "name": "claude-debug-bridge",
+  "version": "1.0.0",
+  "description": "Communication bridge between Claude CLI and Chrome Extension",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "author": "Claude & User",
+  "license": "MIT"
+}
