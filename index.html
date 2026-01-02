@@ -121,16 +121,14 @@
             <strong>🎯 Current Mission:</strong> Debug ADA Dashboard session validation and data loading
         </div>
 
-        <div class="auto-refresh">
-            <strong>⚡ Auto-refreshing every 3 seconds</strong><br>
-            <small>This page updates automatically to show Claude's latest instructions</small>
-        </div>
 
         <div class="instruction">
             <h3>📝 Step 1: Check Session Validation</h3>
             <p>On the ADA Dashboard tab, run this in the console:</p>
             <div class="command">window.authenticatedCustomerId</div>
+            <textarea id="input1" placeholder="Paste result here or use Execute button..." style="width: 100%; height: 80px; margin: 10px 0; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: monospace;"></textarea>
             <button onclick="executeStep1()">Execute & Report</button>
+            <button onclick="submitManual1()" style="background: #4caf50;">Submit Manual Entry</button>
             <div class="result-box" id="result1">
                 <h4>Result:</h4>
                 <pre id="result1-content">Waiting for Chrome Extension...</pre>
@@ -145,7 +143,9 @@
 // 1. Status code (should be 200)
 // 2. Response body should show: { valid: true, customer_id: "...", ... }
             </div>
+            <textarea id="input2" placeholder="Paste network status here..." style="width: 100%; height: 80px; margin: 10px 0; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: monospace;"></textarea>
             <button onclick="executeStep2()">Report Network Status</button>
+            <button onclick="submitManual2()" style="background: #4caf50;">Submit Manual Entry</button>
             <div class="result-box" id="result2">
                 <h4>API Status:</h4>
                 <pre id="result2-content">Waiting for Chrome Extension...</pre>
@@ -156,7 +156,9 @@
             <h3>📊 Step 3: Check Dashboard Data</h3>
             <p>Run this command to see loaded data:</p>
             <div class="command">JSON.stringify(window.currentCustomerData, null, 2)</div>
+            <textarea id="input3" placeholder="Paste dashboard data here..." style="width: 100%; height: 80px; margin: 10px 0; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: monospace;"></textarea>
             <button onclick="executeStep3()">Execute & Report</button>
+            <button onclick="submitManual3()" style="background: #4caf50;">Submit Manual Entry</button>
             <div class="result-box" id="result3">
                 <h4>Dashboard Data:</h4>
                 <pre id="result3-content">Waiting for Chrome Extension...</pre>
@@ -166,7 +168,9 @@
         <div class="instruction">
             <h3>🔍 Step 4: Check Console Errors</h3>
             <p>Any red errors in the console?</p>
+            <textarea id="input4" placeholder="Paste console errors here (or 'None')..." style="width: 100%; height: 80px; margin: 10px 0; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: monospace;"></textarea>
             <button onclick="executeStep4()">Report Errors</button>
+            <button onclick="submitManual4()" style="background: #4caf50;">Submit Manual Entry</button>
             <div class="result-box" id="result4">
                 <h4>Console Errors:</h4>
                 <pre id="result4-content">Waiting for Chrome Extension...</pre>
@@ -185,9 +189,6 @@
     </div>
 
     <script>
-        // Auto-refresh every 3 seconds to get latest instructions from Claude
-        setTimeout(() => location.reload(), 3000);
-
         // Display current time
         document.getElementById('time').textContent = new Date().toLocaleTimeString();
 
@@ -226,6 +227,27 @@
                 command: 'checkConsoleErrors',
                 target: 'dashboard'
             }, '*');
+        }
+
+        // Manual entry functions
+        function submitManual1() {
+            const result = document.getElementById('input1').value.trim();
+            document.getElementById('result1-content').textContent = result || "No result provided";
+        }
+
+        function submitManual2() {
+            const result = document.getElementById('input2').value.trim();
+            document.getElementById('result2-content').textContent = result || "No result provided";
+        }
+
+        function submitManual3() {
+            const result = document.getElementById('input3').value.trim();
+            document.getElementById('result3-content').textContent = result || "No result provided";
+        }
+
+        function submitManual4() {
+            const result = document.getElementById('input4').value.trim();
+            document.getElementById('result4-content').textContent = result || "No errors reported";
         }
 
         async function submitResults() {
